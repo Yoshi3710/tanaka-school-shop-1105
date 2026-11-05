@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0765be">
+<title>カタログから教材を選ぶ｜株式会社タナカ</title>
+<style>
+:root{font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;color:#21334d;background:#f4f7fb;font-size:14px}
+*{box-sizing:border-box}
+body{margin:0}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+header{background:#fff;border-bottom:3px solid #0765be}
+.shell{width:min(1100px,calc(100% - 32px));margin:auto}
+.head{min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:14px;min-width:0;text-decoration:none;color:#173456}
+.brand img{width:220px;height:auto;max-width:53vw}
+.brand span{font-size:13px;font-weight:700}
+.head-tag{font-size:12px;color:#56708e}
+main{padding:24px 0 50px}
+h1{font-size:24px;margin:2px 0 8px;color:#173456}
+h2{font-size:17px;margin:0 0 12px;color:#173456}
+p{line-height:1.65}
+.lead{margin:0 0 18px;color:#4e6280}
+.notice{border-left:4px solid #0765be;background:#edf5ff;padding:10px 14px;margin-bottom:18px;line-height:1.7}
+.panel{border:1px solid #d9e3ed;border-radius:9px;background:#fff;padding:20px;margin:0 0 17px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}
+.field{min-width:0}
+.field label{display:block;color:#344e6d;font-size:12px;font-weight:700;margin-bottom:5px}
+.field input,.field textarea,.item-table input,.item-table textarea,.item-table select{display:block;width:100%;min-width:0;max-width:100%;border:1px solid #c5d2df;border-radius:5px;background:#fff;padding:9px 8px;color:#172f4d;line-height:1.4}
+.field textarea,.item-table textarea{resize:vertical;min-height:58px;overflow-wrap:anywhere}
+.field input:focus,.field textarea:focus,.item-table input:focus,.item-table textarea:focus,.item-table select:focus{outline:2px solid #80b7ed;outline-offset:1px}
+.modes{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 14px}
+.modes label{display:flex;align-items:center;gap:6px;font-weight:700;cursor:pointer}
+.modes input{accent-color:#0765be}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.sec-head h2{margin:0}
+.count{font-weight:700;color:#28649b}
+.hint{color:#526980;font-size:12px;margin:0 0 10px}
+.item-table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:13px}
+.item-table th,.item-table td{border:1px solid #c4d0de;padding:7px;vertical-align:top;overflow-wrap:anywhere}
+.item-table th{background:#e8f1fb;color:#344d67;font-weight:700;text-align:left}
+.item-table .no{width:42px;text-align:center}
+.item-table th:nth-child(2){width:19%}
+.item-table th:nth-child(3){width:13%}
+.item-table th:nth-child(4){width:auto}
+.item-table th:nth-child(5){width:9%}
+.item-table th:nth-child(6){width:15%}
+.item-table th:nth-child(7){width:104px}
+.item-table .ncol{text-align:center;font-weight:700;padding-top:18px}
+.item-table textarea{min-height:68px}
+.item-table td input,.item-table td textarea,.item-table td select{font-size:13px;padding:7px 6px}
+.item-table td .stack{display:grid;gap:6px}
+.item-table td .stack-2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.item-table td .tiny{font-size:11px;color:#58728e;display:block;margin-bottom:3px}
+.item-table .remove{border:1px solid #d5dfe9;background:white;color:#526982;padding:6px 9px;border-radius:5px}
+.item-table .row-ops{display:grid;gap:6px}
+.item-table .duplicate{border:1px solid #9fc5e9;border-radius:5px;background:#edf5ff;color:#0765be;padding:6px 4px;font-size:12px;font-weight:700;line-height:1.35}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+.btn{border:1px solid #0765be;border-radius:6px;padding:10px 16px;font-weight:700;min-height:42px;background:#fff;color:#0765be}
+.btn.primary{background:#0765be;color:#fff}
+.btn:hover{filter:brightness(.96)}
+.small{font-size:12px;color:#526980}
+#status{font-size:12px;color:#26568a;margin-top:12px;min-height:18px}
+#printVersion{display:none}
+@media(max-width:680px){
+.shell{width:min(100% - 20px,1100px)}
+.head{min-height:66px}
+.brand{gap:8px}
+.brand img{width:160px}
+.brand span{font-size:11px}
+.head-tag{display:none}
+main{padding:16px 0 30px}
+h1{font-size:20px}
+.panel{padding:14px 12px}
+.grid{grid-template-columns:minmax(0,1fr)}
+.item-table,.item-table tbody{display:block;width:100%}
+.item-table thead{display:none}
+.item-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #c4d0de;border-radius:6px;margin-bottom:12px;padding:9px;gap:8px}
+.item-table td{display:block;border:0;padding:0;min-width:0}
+.item-table td::before{content:attr(data-label);display:block;color:#344d67;font-weight:700;font-size:12px;margin-bottom:4px}
+.item-table td:nth-child(1){grid-column:1}
+.item-table td:nth-child(4){grid-column:1/-1}
+.item-table td:nth-child(6){grid-column:1/-1}
+.item-table td:nth-child(7){grid-column:1/-1;grid-row:auto;text-align:right}
+.item-table .ncol{text-align:left;padding-top:0}
+.item-table .ncol::before{display:inline;margin-right:6px}
+.item-table td:nth-child(2){grid-column:1/-1}
+.item-table td:nth-child(3){grid-column:1}
+.item-table td:nth-child(5){grid-column:2}
+.item-table td:nth-child(7)::before{display:none}
+.item-table .row-ops{display:flex;justify-content:flex-end;flex-wrap:wrap}
+.item-table td .stack-2{gap:10px}
+}
+@page{size:A4 portrait;margin:13mm 12mm 16mm;@bottom-left{content:"校内確認用／未送信・発注未完了";font-size:8pt;color:#334c66}@bottom-right{content:"ページ " counter(page);font-size:8pt;color:#526980}}
+@media print{
+:root{background:#fff;color:#152c45;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:#fff}
+header,main,.notice,.actions,#status{display:none!important}
+#printVersion{display:block}
+#printVersion h1{font-size:16pt;margin:0 0 2mm}
+#printVersion .print-status{display:inline-block;border:1px solid #33465e;padding:2mm 4mm;font-size:11pt;font-weight:800;margin-bottom:2mm}
+#printVersion .print-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4mm;border-bottom:2px solid #466c93;padding-bottom:3mm}
+#printVersion .print-top strong{font-size:13pt}
+#printVersion .print-info{display:grid;grid-template-columns:1fr 1fr;gap:2mm 5mm;margin:4mm 0;font-size:9.5pt}
+#printVersion .print-info div{border-bottom:1px solid #b8c8d8;padding:1mm 0;white-space:pre-wrap;overflow-wrap:anywhere}
+#printVersion table{border-collapse:collapse;width:100%;min-width:0;table-layout:fixed;font-size:8.5pt}
+#printVersion th,#printVersion td{border:1px solid #a9bbcd;padding:2mm 1.4mm;height:10mm;text-align:left;vertical-align:top;white-space:pre-wrap;overflow-wrap:anywhere}
+#printVersion th{background:#e8f1fb}
+#printVersion tr{break-inside:avoid;page-break-inside:avoid}
+#printVersion .w-no{width:5%}
+#printVersion .w-maker{width:19%}
+#printVersion .w-sku{width:14%}
+#printVersion .w-name{width:36%}
+#printVersion .w-qty{width:9%}
+#printVersion .w-class{width:17%}
+#printVersion .print-approval{border:1px solid #a9bbcd;padding:3mm;margin-top:6mm;break-inside:avoid;font-size:10pt}
+#printVersion .print-notice{border:1px solid #465e7b;padding:3mm;margin-top:4mm;line-height:1.65;font-size:9pt;break-inside:avoid}
+#printVersion .print-memo{margin-top:4mm;white-space:pre-wrap;overflow-wrap:anywhere}
+#printVersion .print-footer{margin-top:3mm;font-size:8pt;color:#42546b}
+}
+
+.method-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 17px}
+.method-choice{display:block;text-decoration:none;border:2px solid #c8daef;border-radius:9px;background:#fff;color:#173456;padding:16px;line-height:1.6}
+.method-choice strong{display:block;font-size:17px;margin-bottom:4px}
+.method-choice span{display:block;color:#50657f;font-size:12px}
+.method-choice.selected{border-color:#0765be;background:#edf5ff}
+.catalog-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;list-style:none;padding:0;margin:0}
+.catalog-links a{display:block;border:1px solid #c9d8e8;padding:10px 12px;border-radius:6px;color:#0861af;text-decoration:none;line-height:1.5;font-weight:700;min-height:100%}
+.catalog-links a:hover,.catalog-links a:focus-visible{background:#eaf4ff}
+.catalog-links small{display:block;font-weight:400;color:#4e6580;margin-top:3px}
+@media(max-width:680px){.method-choices{grid-template-columns:1fr}.catalog-links{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.catalog-links{grid-template-columns:1fr}}
+/* Confirmation is a separate screen; approval is only present on printed sheets. */
+[hidden]{display:none!important}
+.review-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin:14px 0}
+.review-info div{border-bottom:1px solid #dae5ee;padding:7px 2px;white-space:pre-wrap;overflow-wrap:anywhere}
+.review-info strong{display:block;font-size:12px;color:#536d85;margin-bottom:3px}
+/* Screen and print use the same six-column detail table. On a phone only the table scrolls horizontally. */
+.review-table-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid #c4d0de;border-radius:5px;margin:10px 0}
+.summary-table{border-collapse:collapse;width:100%;min-width:740px;table-layout:fixed;font-size:13px}
+.summary-table th,.summary-table td{border:1px solid #c4d0de;padding:8px 6px;vertical-align:top;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.summary-table th{background:#e8f1fb;color:#344d67;font-weight:700}
+.summary-table .w-no{width:5%}
+.summary-table .w-maker{width:19%}
+.summary-table .w-sku{width:14%}
+.summary-table .w-name{width:36%}
+.summary-table .w-qty{width:9%}
+.summary-table .w-class{width:17%}
+.review-scroll-hint{display:none}
+@media(max-width:680px){.review-scroll-hint{display:block}}
+.review-utility{border-top:1px solid #d9e3ed;padding-top:12px;margin-top:18px;font-size:12px;color:#526980}
+.review-utility button{border:0;padding:3px 0;background:none;color:#0765be;text-decoration:underline;font-weight:700;cursor:pointer}
+.review-notice{font-size:12px;color:#526980;margin:10px 0}
+@media(max-width:680px){.review-info{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="shell head"><a class="brand" href="./" aria-label="株式会社タナカ トップページ"><img src="./assets/logo.webp" alt="株式会社タナカ" width="960" height="210"><span>学校教材販売サイト｜カタログ注文入力</span></a><div class="head-tag">カタログ注文・見積り依頼</div></div></header>
+<main class="shell">
+<h1>カタログから教材を選ぶ</h1>
+<p class="lead">メーカーのカタログを見ながら、教材情報と必要数を入力します。複数メーカーの商品をまとめて記入できます。</p>
+<div class="notice" id="apiNotice"><strong>受付機能の準備状況を確認しています。</strong> 受付開始前は正式送信されません。校内確認用の印刷・PDF保存は必要な場合だけ利用できます。</div>
+<div id="entryStage">
+
+<section class="method-choices" aria-label="教材の選び方">
+<div class="method-choice selected" aria-current="page"><strong>① カタログから注文する</strong><span>基本は紙のカタログを見て、メーカー名・品番・品名・数量を入力します。Webカタログは参考用です。掲載の6社以外のメーカーも自由に入力できます。（この画面）</span></div>
+<a class="method-choice" href="./order.html"><strong>② 商品を見て選ぶ</strong><span>このサイトで紹介しているデザインセットなどを、写真・商品情報から選びます。</span></a>
+</section>
+<section class="panel" aria-labelledby="catalog-h"><h2 id="catalog-h">参考：メーカーのWebカタログ</h2>
+<p class="hint">下記6社は参考リンクです。お手元の紙カタログや、掲載のないメーカーのカタログからもご注文できます。掲載ページは任意入力です。リンク先から注文する必要はありません。</p>
+<ul class="catalog-links">
+<li><a href="https://www.artec-kk.co.jp/catalog/" target="_blank" rel="noopener noreferrer">アーテック<small>2026年 学校向け教材カタログ一覧</small></a></li>
+<li><a href="https://educe-web.craypas.co.jp/" target="_blank" rel="noopener noreferrer">エデュース<small>Vol.25・プチエデュースVol.16</small></a></li>
+<li><a href="https://app.icata.net/web/catalog/detail/CMC00008/CMC00008/4537180000" target="_blank" rel="noopener noreferrer">新日本造形<small>2026年 図工・美術教材カタログ</small></a></li>
+<li><a href="https://www.smartschool.jp/contents/digital-catalog.php" target="_blank" rel="noopener noreferrer">スマートスクール<small>デジタルカタログ一覧</small></a></li>
+<li><a href="https://shop.bijutsu.biz/page/catalog" target="_blank" rel="noopener noreferrer">美術出版（アートロコ）<small>2026年度 BSSカタログ</small></a></li>
+<li><a href="https://www.crafteriaux.co.jp/catalog" target="_blank" rel="noopener noreferrer">クラフテリオ（サンワ）<small>2026年度カタログ案内・申込ページ</small></a></li>
+</ul>
+<p class="hint" style="margin:12px 0 0">※クラフテリオのリンク先ではカタログ申込が必要です。メーカー側のサイトに移動します。</p>
+</section>
+<section class="panel" aria-labelledby="request-h"><h2 id="request-h">ご依頼の種類と学校情報</h2>
+<div class="modes"><label><input type="radio" name="request" value="ご注文予定" checked> ご注文予定</label><label><input type="radio" name="request" value="見積依頼予定"> 見積依頼予定</label></div>
+<div class="grid">
+<div class="field"><label for="school">学校名</label><input id="school" autocomplete="organization" placeholder="〇〇市立〇〇学校" maxlength="120"></div>
+<div class="field"><label for="teacher">ご担当の先生</label><input id="teacher" autocomplete="name" placeholder="お名前" maxlength="80"></div>
+<div class="field"><label for="tel">電話番号</label><input id="tel" autocomplete="tel" type="tel" placeholder="学校の電話番号" maxlength="40"></div>
+<div class="field"><label for="email">ご返信先メールアドレス（正式受付時は必須）</label><input id="email" autocomplete="email" type="email" placeholder="学校で受信できるメールアドレス" maxlength="254"></div>
+<div class="field"><label for="address">納品先・ご連絡先</label><input id="address" placeholder="学校名・ご住所など" maxlength="250"></div>
+<div class="field"><label for="sales">タナカ担当営業（任意）</label><input id="sales" placeholder="分かる場合のみ" maxlength="80"></div>
+</div></section>
+<section class="panel" aria-labelledby="details-h">
+<div class="sec-head"><h2 id="details-h">教材の明細</h2><div class="count" aria-live="polite">現在 <span id="count">1</span> 明細</div></div>
+<p class="hint">「品名・規格・備考」は改行できます。別のクラスにも同じ商品が必要な場合は、その行の「同じ商品を別クラスに追加」をご利用ください。</p>
+<table class="item-table" aria-label="カタログ注文の教材明細"><thead><tr><th class="no">No.</th><th>メーカー・ページ</th><th>品番</th><th>品名・規格・備考</th><th>数量</th><th>学年・組</th><th>操作</th></tr></thead><tbody id="lines"></tbody></table>
+<div class="actions"><button class="btn" id="addItem" type="button">＋ 商品を追加</button></div>
+<p id="status" role="status" aria-live="polite"></p>
+</section>
+<div class="panel"><div class="actions"><button class="btn primary" id="reviewButton" type="button">入力内容を確認する →</button><button class="btn" id="clearButton" type="button">入力内容を初期化</button></div><p class="small">※入力途中の内容はブラウザ内に自動保存しません。個人情報を含む入力は共用端末での取り扱いにご注意ください。児童・生徒の氏名は入力しないでください。</p></div>
+</div>
+<section id="reviewStage" class="panel" aria-labelledby="reviewHeading" hidden>
+<h2 id="reviewHeading">ご依頼内容の確認</h2>
+<p class="small">学校情報と教材明細をご確認のうえ、ご注文または見積り依頼をお選びください。商品が同じでもクラスが違う場合は別行で表示します。</p>
+<div id="reviewContent"></div>
+<div class="actions"><button class="btn primary" id="orderPreview" type="button">ご注文する</button><button class="btn" id="quotePreview" type="button">見積りを依頼する</button><button class="btn" id="backEdit" type="button">入力内容を修正する</button></div>
+<p class="review-notice" id="reviewNotice"><strong>メール確認方式：</strong>受付可能な場合は、ご返信先に届く確認メールのリンクで確定します。確認前は仮受付です。受付準備中は正式送信されません。</p>
+<p id="reviewStatus" role="status" aria-live="polite"></p>
+<div class="review-utility">必要な学校のみご利用ください： <button id="printButton" type="button">校内承認用に印刷・PDF保存</button><p class="small">印刷書類にだけ承認者・承認日の記入欄が付きます。印刷・保存だけでは注文や見積り依頼は送信されません。</p></div>
+</section>
+</main>
+<div id="printVersion" aria-hidden="true"></div>
+<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px" />
+<template id="lineTemplate">
+<tr>
+<td class="ncol" data-label="No."></td>
+<td data-label="メーカー・ページ"><div class="stack"><label><span class="tiny">メーカー</span><input name="maker" placeholder="メーカー名" maxlength="100"></label><label><span class="tiny">カタログページ（任意）</span><input name="page" placeholder="例：P.25" maxlength="40"></label></div></td>
+<td data-label="品番"><input name="sku" placeholder="品番" maxlength="100"></td>
+<td data-label="品名・規格・備考"><textarea name="detail" placeholder="品名、規格、色、サイズ、その他の備考などを改行して入力" maxlength="5000" rows="3"></textarea></td>
+<td data-label="数量"><input name="qty" type="number" inputmode="numeric" min="1" max="999999" step="1" placeholder="個数" aria-label="数量"></td>
+<td data-label="学年・組"><div class="stack-2"><label><span class="tiny">学年</span><select name="grade" aria-label="学年"><option value="">未指定</option><option value="1">1年</option><option value="2">2年</option><option value="3">3年</option><option value="4">4年</option><option value="5">5年</option><option value="6">6年</option><option value="その他">その他</option></select></label><label><span class="tiny">組</span><input name="class" placeholder="例：1" maxlength="30" aria-label="組"></label></div></td>
+<td data-label="行の操作"><div class="row-ops"><button type="button" class="duplicate" aria-label="この商品を別クラスに追加">同じ商品を<br>別クラスに追加</button><button type="button" class="remove" aria-label="この明細行を削除">削除</button></div></td>
+</tr>
+</template>
+<script>
+(()=>{'use strict';
+const lines=document.getElementById('lines');
+const tmpl=document.getElementById('lineTemplate');
+const count=document.getElementById('count');
+const status=document.getElementById('status');
+let serverToken='',apiEnabled=false,posted=false,currentRequestId='';
+const idempotency=()=>globalThis.crypto?.randomUUID?.()||Array.from(crypto.getRandomValues(new Uint8Array(16)),v=>v.toString(16).padStart(2,'0')).join('');
+async function checkServer(){
+ try{
+  const reply=await fetch('api/token.php',{credentials:'same-origin',cache:'no-store'});
+  const info=await reply.json();
+  if(info.ok&&info.enabled&&info.csrf){apiEnabled=true;serverToken=info.csrf;document.getElementById('apiNotice').textContent='正式受付に進む場合は、返信先メールアドレスの確認が必要です。確認メールに記載のリンクから受付を確定できます。校内承認用印刷は任意です。';return;}
+ }catch(e){/* file://の単独試作版やサーバー準備中でも入力・印刷は使用可能 */}
+ document.getElementById('apiNotice').textContent='【送信停止中】入力と校内承認用印刷は使用できますが、正式な注文・見積り依頼の送信はできません。';
+}
+
+function renumber(){[...lines.rows].forEach((row,i)=>{row.querySelector('.ncol').textContent=String(i+1);row.querySelector('.remove').disabled=lines.rows.length===1;});count.textContent=String(lines.rows.length)}
+function addRow(){const row=tmpl.content.firstElementChild.cloneNode(true);lines.appendChild(row);renumber();return row}
+lines.addEventListener('input',ev=>{if(!ev.target.matches('textarea'))return;ev.target.style.height='auto';ev.target.style.height=ev.target.scrollHeight+'px'});
+function text(id){return document.getElementById(id).value.trim()}
+function val(row,name){return row.querySelector('[name="'+name+'"]').value.trim()}
+function make(tag,value,cls){const el=document.createElement(tag);if(cls)el.className=cls;el.textContent=value;return el}
+function groupLabel(row){
+ const grade=val(row,'grade'),klass=val(row,'class');
+ return grade?(grade==='その他'?'その他':grade+'年')+(klass?' '+klass+'組':''):(klass?klass+'組':'　');
+}
+// Generate both the on-screen confirmation and the printed sheet from one source.
+function detailTable(){
+ const table=document.createElement('table');table.className='summary-table';table.setAttribute('aria-label','ご依頼の教材明細');
+ const thead=document.createElement('thead'),header=document.createElement('tr');
+ [['No.','w-no'],['メーカー・ページ','w-maker'],['品番','w-sku'],['品名・規格・備考','w-name'],['数量','w-qty'],['学年・組','w-class']].forEach(([label,cls])=>header.append(make('th',label,cls)));
+ thead.append(header);table.append(thead);
+ const tbody=document.createElement('tbody');
+ [...lines.rows].forEach((row,i)=>{
+  const tr=document.createElement('tr');
+  [String(i+1),[val(row,'maker'),val(row,'page')].filter(Boolean).join('\n')||'　',val(row,'sku')||'　',val(row,'detail')||'　',val(row,'qty')||'　',groupLabel(row)].forEach(value=>tr.append(make('td',value)));
+  tbody.append(tr);
+ });
+ table.append(tbody);return table;
+}
+function showReview(){
+ const summary=document.getElementById('reviewContent');summary.replaceChildren();
+ const info=make('div','','review-info');
+ [['学校名',text('school')],['ご担当の先生',text('teacher')],['電話番号',text('tel')],['メールアドレス',text('email')],['納品先・ご連絡先',text('address')],['タナカ担当営業',text('sales')]].forEach(([k,v])=>{const box=document.createElement('div');box.append(make('strong',k),make('span',v||'（未記入）'));info.append(box)});
+ const wrap=make('div','','review-table-wrap');wrap.append(detailTable());
+ summary.append(info,make('h2','教材明細（'+lines.rows.length+'明細）'),make('p','スマートフォンでは表を左右にスクロールして確認できます。','review-scroll-hint'),wrap);
+ currentRequestId=idempotency();document.getElementById('reviewStatus').textContent='';document.getElementById('entryStage').hidden=true;document.getElementById('reviewStage').hidden=false;window.scrollTo(0,0);
+}
+function qtyInvalid(){return [...lines.rows].some(r=>{const q=val(r,'qty');return q!==''&&(!Number.isSafeInteger(Number(q))||Number(q)<1||Number(q)>999999)})}
+function printable(){const root=document.getElementById('printVersion');root.replaceChildren();const top=make('div','','print-top');const title=document.createElement('div');title.append(make('h1','【校内確認用】'+document.querySelector('[name="request"]:checked').value));title.append(make('div','未送信・発注未完了','print-status'));top.append(title,make('strong','株式会社タナカ'));root.append(top);
+const info=make('div','','print-info');[['学校名',text('school')],['ご担当の先生',text('teacher')],['電話番号',text('tel')],['メールアドレス',text('email')],['納品先・ご連絡先',text('address')],['タナカ担当営業',text('sales')]].forEach(([k,v])=>info.append(make('div',k+'：'+(v||'（未記入）'))));root.append(info);
+root.append(detailTable());
+root.append(make('div','校内承認欄　承認者（署名・押印）：______________________　承認日：______年______月______日','print-approval'));
+root.append(make('div','この書類は校内での確認・承認用です。【未送信・発注未完了】印刷・PDF保存しただけでは注文・見積依頼は完了しません。試作版のため、この画面からタナカへの正式送信は行われません。','print-notice'));
+root.append(make('div','価格・納期・取扱可否は未確定です。株式会社タナカから別途ご案内します。','print-footer'));
+}
+document.getElementById('addItem').addEventListener('click',()=>{const row=addRow();if(row)row.querySelector('[name="maker"]').focus()});
+lines.addEventListener('click',ev=>{
+ const duplicate=ev.target.closest('button.duplicate');
+ if(duplicate){
+  const source=duplicate.closest('tr'),copy=tmpl.content.firstElementChild.cloneNode(true);
+  ['maker','page','sku','detail'].forEach(name=>{copy.querySelector('[name="'+name+'"]').value=val(source,name)});
+  source.insertAdjacentElement('afterend',copy);
+  const detail=copy.querySelector('textarea');detail.style.height='auto';detail.style.height=detail.scrollHeight+'px';
+  renumber();copy.querySelector('[name="qty"]').focus();status.textContent='同じ商品の明細を追加しました。数量・学年・組を入力してください。';return;
+ }
+ const remove=ev.target.closest('button.remove');
+ if(!remove||lines.rows.length===1)return;
+ remove.closest('tr').remove();renumber();
+});
+document.getElementById('reviewButton').addEventListener('click',()=>{if(qtyInvalid()){status.textContent='数量は1～999999の整数で入力してください。';return}status.textContent='';showReview()});
+document.getElementById('backEdit').addEventListener('click',()=>{document.getElementById('reviewStage').hidden=true;document.getElementById('entryStage').hidden=false;document.getElementById('reviewButton').focus()});
+async function sendRequest(mode,label){
+ const notice=document.getElementById('reviewStatus');
+ document.querySelector('[name="request"][value="'+(mode==='order'?'ご注文予定':'見積依頼予定')+'"]').checked=true;
+ if(posted){notice.textContent='仮受付済みです。確認メールをご確認ください。';return;}
+ if(!apiEnabled){notice.textContent='【送信停止中】'+label+'は送信されていません。';return;}
+ const school=text('school'),teacher=text('teacher'),phone=text('tel'),email=text('email');
+ if(!school||!teacher||!phone||!email||!document.getElementById('email').checkValidity()){
+  notice.textContent='正式受付には学校名、担当の先生、学校電話番号、返信先メールアドレスが必要です。「入力内容を修正する」からご確認ください。';return;
+ }
+ if([...lines.rows].some(row=>!val(row,'maker')||(!val(row,'sku')&&!val(row,'detail'))||!val(row,'qty')||qtyInvalid())){
+  notice.textContent='メーカー名・品番または品名・数量が未入力の明細があります。';return;
+ }
+ const order={type:mode,school,teacher,phone,email,address:text('address'),sales:text('sales'),lines:[...lines.rows].map(row=>({
+  maker:val(row,'maker'),page:val(row,'page'),sku:val(row,'sku'),detail:val(row,'detail'),qty:Number(val(row,'qty')),grade:val(row,'grade'),class:val(row,'class')
+ }))};
+ const btn1=document.getElementById('orderPreview'),btn2=document.getElementById('quotePreview');
+ btn1.disabled=btn2.disabled=true;notice.textContent='確認メールの送信処理を行っています。';
+ try{
+  const reply=await fetch('api/submit.php',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({csrf:serverToken,idempotency_key:currentRequestId,website:document.getElementById('website').value,order})});
+  const result=await reply.json();
+  if(!reply.ok||!result.ok){notice.textContent=(result.message||'受付処理に失敗しました。')+(result.ref?' 仮受付番号：'+result.ref:'');return;}
+  posted=true;
+  notice.textContent=result.pending?'【仮受付】'+result.ref+'　確認メールのリンクから受付を確定してください。メール確認前は、ご注文・見積り依頼が正式に受け付けられていません。':'【受付済み】'+result.ref+'　すでに受付が完了しています。';
+  document.getElementById('backEdit').disabled=true;
+ }catch(e){notice.textContent='通信エラーです。受付状況が不明なため、すぐに再送信せずタナカへご確認ください。';}
+ finally{if(!posted){btn1.disabled=btn2.disabled=false;}}
+}
+[['orderPreview','order','ご注文'],['quotePreview','quote','見積り依頼']].forEach(([id,mode,label])=>document.getElementById(id).addEventListener('click',()=>sendRequest(mode,label)));
+document.getElementById('printButton').addEventListener('click',()=>{if(qtyInvalid()){document.getElementById('reviewStatus').textContent='数量は1～999999の整数で入力してください。';return}printable();window.print()});
+document.getElementById('clearButton').addEventListener('click',()=>{if(!window.confirm('学校情報と商品明細の入力内容をすべて消去します。よろしいですか？'))return;['school','teacher','tel','email','address','sales'].forEach(id=>document.getElementById(id).value='');document.querySelector('[name="request"][value="ご注文予定"]').checked=true;lines.replaceChildren();addRow();status.textContent='入力内容を初期化しました。'});
+addRow();if(location.hostname.endsWith('.github.io')){document.getElementById('apiNotice').textContent='【比較用試作版・送信停止中】入力・内容確認・校内確認用の印刷をお試しいただけます。正式なご注文・見積り依頼は送信されません。';}else{checkServer();}
+})();
+</script>
+</body></html>
